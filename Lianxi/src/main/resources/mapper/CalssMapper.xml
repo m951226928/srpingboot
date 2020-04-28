@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.offon.mapper.CalssMapper">
+
+    <resultMap id="BaseResultMap" type="com.offon.model.Calss" >
+                <result column="calssid" property="calssid" />
+                <result column="calssname" property="calssname" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                `calssid`,
+                `calssname`
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" parameterType="com.offon.model.Calss">
+        INSERT INTO calss
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                        <if test ='null != calssid'>
+                        `calssid`,
+                        </if>
+                        <if test ='null != calssname'>
+                        `calssname`
+                        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                        <if test ='null != calssid'>
+                        #{calssid},
+                        </if>
+                        <if test ='null != calssname'>
+                        #{calssname}
+                        </if>
+        </trim>
+    </insert>
+
+    <delete id="delete" >
+        DELETE FROM calss
+        WHERE `id_` = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.offon.model.Calss">
+        UPDATE calss
+        <set>
+                    <if test ='null != calssid'>calssid = #{calssid},</if>
+                    <if test ='null != calssname'>calssname = #{calssname}</if>
+        </set>
+        WHERE `id_` = #{id}
+    </update>
+
+
+    <select id="load" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM calss
+    </select>
+    <select id="load1" resultMap="BaseResultMap">
+    SELECT * FROM Calss WHERE calssId= (SELECT calssId FROM teacher WHERE teaId =#{id})
+    </select>
+
+</mapper>

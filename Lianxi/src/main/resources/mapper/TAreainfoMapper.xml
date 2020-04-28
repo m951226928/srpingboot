@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.offon.mapper.TAreainfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.offon.model.TAreainfo" >
+                <result column="id" property="id" />
+                <result column="level" property="level" />
+                <result column="name" property="name" />
+                <result column="parentid" property="parentid" />
+                <result column="status" property="status" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                `id`,
+                `level`,
+                `name`,
+                `parentid`,
+                `status`
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" parameterType="com.offon.model.TAreainfo">
+        INSERT INTO t_areainfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                        <if test ='null != id'>
+                        `id`,
+                        </if>
+                        <if test ='null != level'>
+                        `level`,
+                        </if>
+                        <if test ='null != name'>
+                        `name`,
+                        </if>
+                        <if test ='null != parentid'>
+                        `parentid`,
+                        </if>
+                        <if test ='null != status'>
+                        `status`
+                        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                        <if test ='null != id'>
+                        #{id},
+                        </if>
+                        <if test ='null != level'>
+                        #{level},
+                        </if>
+                        <if test ='null != name'>
+                        #{name},
+                        </if>
+                        <if test ='null != parentid'>
+                        #{parentid},
+                        </if>
+                        <if test ='null != status'>
+                        #{status}
+                        </if>
+        </trim>
+    </insert>
+
+    <delete id="delete" >
+        DELETE FROM t_areainfo
+        WHERE `id_` = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.offon.model.TAreainfo">
+        UPDATE t_areainfo
+        <set>
+                    <if test ='null != id'>id = #{id},</if>
+                    <if test ='null != level'>level = #{level},</if>
+                    <if test ='null != name'>name = #{name},</if>
+                    <if test ='null != parentid'>parentid = #{parentid},</if>
+                    <if test ='null != status'>status = #{status}</if>
+        </set>
+        WHERE `id_` = #{id}
+    </update>
+
+
+    <select id="load" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM t_areainfo where `id` = #{id}
+    </select>
+
+  <select id="load1" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM t_areainfo where `parentId` = #{id1}
+    </select>
+</mapper>

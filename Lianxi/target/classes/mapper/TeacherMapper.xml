@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.offon.mapper.TeacherMapper">
+
+    <resultMap id="BaseResultMap" type="com.offon.model.Teacher" >
+                <result column="teaid" property="teaid" />
+                <result column="teacalss" property="teacalss" />
+                <result column="teaname" property="teaname" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                `teaid`,
+                `teacalss`,
+                `teaname`
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" parameterType="com.offon.model.Teacher">
+        INSERT INTO teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                        <if test ='null != teaid'>
+                        `teaid`,
+                        </if>
+                        <if test ='null != teacalss'>
+                        `teacalss`,
+                        </if>
+                        <if test ='null != teaname'>
+                        `teaname`
+                        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                        <if test ='null != teaid'>
+                        #{teaid},
+                        </if>
+                        <if test ='null != teacalss'>
+                        #{teacalss},
+                        </if>
+                        <if test ='null != teaname'>
+                        #{teaname}
+                        </if>
+        </trim>
+    </insert>
+
+    <delete id="delete" >
+        DELETE FROM teacher
+        WHERE `id_` = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.offon.model.Teacher">
+        UPDATE teacher
+        <set>
+                    <if test ='null != teaid'>teaid = #{teaid},</if>
+                    <if test ='null != teacalss'>teacalss = #{teacalss},</if>
+                    <if test ='null != teaname'>teaname = #{teaname}</if>
+        </set>
+        WHERE `id_` = #{id}
+    </update>
+
+
+    <select id="load" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM teacher where `teaId` = #{n}
+    </select>
+
+
+</mapper>
